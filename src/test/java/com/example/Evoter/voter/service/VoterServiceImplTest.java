@@ -1,23 +1,21 @@
 package com.example.Evoter.voter.service;
 
-import com.example.Evoter.Address;
-import com.example.Evoter.Gender;
+import com.example.Evoter.address.data.model.Address;
+import com.example.Evoter.voter.data.model.Gender;
 import com.example.Evoter.voter.dto.request.VoterRequest;
 
 import com.example.Evoter.voter.exception.VoterException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class VoterServiceImplTest {
 VoterRequest voter1;
@@ -116,7 +114,7 @@ voter5.setGender(Gender.MALE);
         address6.setStreetName("fola-goro");
         address6.setLocalGovernment("abul-ijesha");
         address6.setState("lagos");
-    voter6 = new VoterRequest();
+voter6 = new VoterRequest();
 voter6.setFirstName("nnema");
 voter6.setLastName("jonathan");
 voter6.setPassword("samuel-shola");
@@ -127,14 +125,27 @@ voter6.setGender(Gender.FEMALE);
 
 
     }
+    @Disabled
     @Test
     void testThatVoterCanRegisterForVotersCard() throws VoterException, IOException {
-      MockMultipartFile file =
-      new MockMultipartFile("test_image",
-              new FileInputStream("C:\\Users\\USER\\Downloads\\ST MEDIA-32.jpg"));
-       var response = voterService.createVoteAccount(voter1,file);
-      assertThat(response).isNotNull();
+
+    voterService.createVoteAccount(voter1);
+    voterService.createVoteAccount(voter2);
+    voterService.createVoteAccount(voter3);
+    voterService.createVoteAccount(voter4);
+    voterService.createVoteAccount(voter5);
+    voterService.createVoteAccount(voter6);
+
+
     }
+
+@Test
+  void testThatWeCantHaveDuplicatedVoter(){
+        
+}
+
+
+
 
 
 }

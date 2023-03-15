@@ -14,7 +14,7 @@ public class EmailServiceImpl implements EmailService {
     public Voter sendEmail(Voter voter, String subject, String message) {
 
     SimpleMailMessage mailMessage = new SimpleMailMessage();
-    mailMessage.setFrom("samuelShola14@gmail.com/E-voter-service".toUpperCase());
+    mailMessage.setFrom("samuelShola14@gmail.com");
     mailMessage.setTo(voter.getUserEmailAddress());
     mailMessage.setSubject(subject);
     mailMessage.setText(message);

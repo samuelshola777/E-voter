@@ -1,8 +1,7 @@
 package com.example.Evoter.voter.dto.request;
 
-import com.example.Evoter.Address;
-import com.example.Evoter.Gender;
-import jakarta.persistence.OneToOne;
+import com.example.Evoter.address.data.model.Address;
+import com.example.Evoter.voter.data.model.Gender;
 import lombok.Data;
 @Data
 public class VoterRequest {

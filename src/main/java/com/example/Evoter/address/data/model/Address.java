@@ -1,4 +1,4 @@
-package com.example.Evoter;
+package com.example.Evoter.address.data.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,13 +1,10 @@
 package com.example.Evoter.voter.data.model;
 
-import com.example.Evoter.Address;
-import com.example.Evoter.Gender;
+import com.example.Evoter.address.data.model.Address;
 import com.example.Evoter.voter.exception.VoterException;
-import com.sun.jdi.connect.VMStartException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,7 +32,8 @@ public class Voter {
     private String userEmailAddress;
     private LocalDateTime starAt;
     private LocalDateTime endAt;
-    @OneToOne
+    @OneToOne(cascade =  CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address voterAddress;
     private String occupation;
     private String voterCandidate;
