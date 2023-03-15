@@ -2,6 +2,7 @@ package com.example.Evoter.voter.service;
 
 import com.example.Evoter.address.data.model.Address;
 import com.example.Evoter.voter.data.model.Gender;
+import com.example.Evoter.voter.data.model.Voter;
 import com.example.Evoter.voter.dto.request.VoterRequest;
 
 import com.example.Evoter.voter.exception.VoterException;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -93,8 +96,10 @@ voter4 = new VoterRequest();
 voter4.setFirstName("samuel");
 voter4.setLastName("segun");
 voter4.setPassword("samosa");
+voter4.setVoterAddress(address4);
 voter4.setPhoneNumber("09099332736");
 voter4.setUserEmailAddress("fanusamuel@gmail.com");
+voter4.setGender(Gender.MALE);
 
         address5 = new Address();
         address5.setHouseNumber("2");
@@ -109,6 +114,7 @@ voter5.setPhoneNumber("03045542344");
 voter5.setUserEmailAddress("essienriicch98@outlook.com");
 voter5.setOccupation("java-engineer");
 voter5.setGender(Gender.MALE);
+voter5.setVoterAddress(address5);
         address6 = new Address();
         address6.setHouseNumber("25");
         address6.setStreetName("fola-goro");
@@ -121,6 +127,7 @@ voter6.setPassword("samuel-shola");
 voter6.setPhoneNumber("08142465973");
 voter6.setUserEmailAddress("nenman.williams@gmail.com");
 voter6.setOccupation("full stack engineer");
+voter6.setVoterAddress(address6);
 voter6.setGender(Gender.FEMALE);
 
 
@@ -139,10 +146,7 @@ voter6.setGender(Gender.FEMALE);
 
     }
 
-@Test
-  void testThatWeCantHaveDuplicatedVoter(){
-        
-}
+
 
 
 

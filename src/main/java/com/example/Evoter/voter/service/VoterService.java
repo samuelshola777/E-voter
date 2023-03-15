@@ -8,4 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface VoterService {
     Voter createVoteAccount(VoterRequest voter1) throws VoterException;
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.Optional;
 
 @Service
 public class VoterServiceImpl implements VoterService{
@@ -23,12 +24,14 @@ VoterRepository veeRepo;
     @Override
 public Voter createVoteAccount(VoterRequest voterRequest) throws VoterException {
 Voter builtVoter = buildVoter(voterRequest);
-Voter voterEmail = sendRegistrationMail(builtVoter);
-Voter tokenedVoter = generateVoterToken(voterEmail);
-veeRepo.save(tokenedVoter);
-return tokenedVoter;
-
+Voter tokenedVoter = generateVoterToken(builtVoter);
+if (!findByEmail(tokenedVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
+Voter voterEmail = sendRegistrationMail(tokenedVoter);
+veeRepo.save(voterEmail);
+return voterEmail;
     }
+
+
     public Voter generateVoterToken(Voter voter){
         String Fl = pickFirstTwoAlphabet(voter.getFirstName());
         String LL = pickLastTwoAlphabet(voter.getVoterAddress().getLocalGovernment());
@@ -64,7 +67,10 @@ return tokenedVoter;
        return Li;
    }
 
-
+    public boolean findByEmail(String email){
+        if (veeRepo.findByUserEmailAddress(email) == null)return true;
+        return false;
+    }
    public Voter sendRegistrationMail(Voter voter){
        String emailHeader = "E-VOTER REGISTERATION SUCCESSFUL";
        String emailBody = "welcome to the online voting system\n\n" +
