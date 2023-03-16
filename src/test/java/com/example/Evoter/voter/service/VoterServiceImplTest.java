@@ -5,6 +5,7 @@ import com.example.Evoter.dto.request.PasswordRequest;
 import com.example.Evoter.voter.data.model.Gender;
 import com.example.Evoter.dto.request.VoterRequest;
 
+import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -260,9 +261,9 @@ void testThatWeCanFindVotersByEmailAddress() throws VoterException {
     assertEquals("i'm_A-model", voterService.changePassword(passwordRequest7));
 }
 @Test
-    void testThatVotersCanForgetPassword() throws VoterException {
-
-        assertEquals("sa34526how", voterService.forgotPassword(passwordRequest2));
+    void testThatVotersCanForgetPassword() throws VoterException, PasswordExeption {
+        voterService.forgotPassword(passwordRequest1);
+    assertEquals("BONESHAKER", voterService.changePassword(passwordRequest1));
 }
 
 

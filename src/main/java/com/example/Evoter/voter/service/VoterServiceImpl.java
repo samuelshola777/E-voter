@@ -61,19 +61,18 @@ return passwordRequest.getNewPassword();
 }
 
     @Override
-    public String forgotPassword(PasswordRequest passwordRequest) throws PasswordExeption, VoterException {
-    Voter forgetPassWordVoter = findByVoterByEmail(passwordRequest.getUserEmailAddress());
-    if (!forgetPassWordVoter.getVoteNumber().equals(passwordRequest.getVoteNumber()))
+public String forgotPassword(PasswordRequest passwordRequest) throws PasswordExeption, VoterException {
+Voter forgetPassWordVoter = findByVoterByEmail(passwordRequest.getUserEmailAddress());
+if (!forgetPassWordVoter.getVoteNumber().equals(passwordRequest.getVoteNumber()))
 throw new PasswordExeption("you have entered a wrong vote number trying to retrieve password");
-    if (!forgetPassWordVoter.getPhoneNumber().equals(passwordRequest.getPhoneNumber()))
-        throw new PasswordExeption("the phone Number you entered is in valid");
-    String newPassword = passwordGenerator(forgetPassWordVoter);
-    forgetPassWordVoter.setPassword(newPassword);
-        return "GOOD DAY "+forgetPassWordVoter.getFirstName()+" \n" +
-    "the system have generated a new password and sent it the email address "+forgetPassWordVoter.getUserEmailAddress();
+String newPassword = passwordGenerator(forgetPassWordVoter);
+forgetPassWordVoter.setPassword(newPassword);
+forgetPasswordMailSender(newPassword,forgetPassWordVoter);
+return "GOOD DAY "+forgetPassWordVoter.getFirstName()+" \n" +
+"the system have generated a new password and sent it the email address " +
+""+forgetPassWordVoter.getUserEmailAddress();
     }
-
-    public Voter generateVoterToken(Voter voter){
+public Voter generateVoterToken(Voter voter){
 String Fl = pickFirstTwoAlphabet(voter.getFirstName());
 String LL = pickLastTwoAlphabet(voter.getVoterAddress().getLocalGovernment());
 String number = numberGenerator();
@@ -137,6 +136,15 @@ String changePasswordMessage = "GOOD DAY MR  "+voter.getFirstName()+" "+voter.ge
 if (voter.getGender() == Gender.FEMALE) emailService.sendEmail(voter,changePasswordHeader,changePasswordMessageFemale);
 if (voter.getGender() == Gender.MALE) emailService.sendEmail(voter,changePasswordHeader,changePasswordMessage);
 
+}
+public void forgetPasswordMailSender(String newPassword, Voter voter){
+    String header ="<<E-VOTERS  FORGET PASSWORD NOTIFICATION>>";
+    String body = "good day "+voter.getFirstName()+"" +
+    " "+voter.getLastName()+" this is to inform you that" +
+" a new password has been create for your" +
+    " E-VOTER account ()-> "+newPassword+"  is your  " +
+"new password please ensure to change your password to what you can remember ";
+    emailService.sendEmail(voter,header,body);
 }
 public String passwordGenerator(Voter voter){
     SecureRandom secureRandom = new SecureRandom();
