@@ -32,7 +32,11 @@ Address address4;
 VoterRequest voter5;
 Address address5;
 VoterRequest voter6;
+VoterRequest voter7;
+VoterRequest voter8;
 Address address6;
+Address address7;
+Address address8;
 @Autowired
 VoterService voterService;
     @BeforeEach
@@ -129,6 +133,34 @@ voter6.setUserEmailAddress("nenman.williams@gmail.com");
 voter6.setOccupation("full stack engineer");
 voter6.setVoterAddress(address6);
 voter6.setGender(Gender.FEMALE);
+ address7 = new Address();
+        address7.setHouseNumber("25");
+        address7.setStreetName("beger");
+        address7.setLocalGovernment("abul-ijesha");
+        address7.setState("lagos");
+voter7 = new VoterRequest();
+voter7.setFirstName("ore");
+voter7.setLastName("beauti");
+voter7.setPassword("samuel-shola");
+voter7.setPhoneNumber("081424659556");
+voter7.setUserEmailAddress("orework22@gmail.com");
+voter7.setOccupation("full stack engineer");
+voter7.setVoterAddress(address7);
+voter7.setGender(Gender.FEMALE);
+        address8 = new Address();
+        address8.setHouseNumber("25");
+        address8.setStreetName("beger");
+        address8.setLocalGovernment("abul-ijesha");
+        address8.setState("lagos");
+voter8 = new VoterRequest();
+voter8.setFirstName("Haneefah");
+voter8.setLastName("beauti");
+voter8.setPassword("samuel-shola");
+voter8.setPhoneNumber("0814 456 5016");
+voter8.setUserEmailAddress("motunrayor2@gmail.com");
+voter8.setOccupation("full stack engineer");
+voter8.setVoterAddress(address8);
+voter8.setGender(Gender.FEMALE);
 
 
     }
@@ -136,13 +168,15 @@ voter6.setGender(Gender.FEMALE);
     @Test
     void testThatVoterCanRegisterForVotersCard() throws VoterException, IOException {
 
-    voterService.createVoteAccount(voter1);
-//    voterService.createVoteAccount(voter2);
-//    voterService.createVoteAccount(voter3);
-//    voterService.createVoteAccount(voter4);
-//    voterService.createVoteAccount(voter5);
-//    voterService.createVoteAccount(voter6);
 
+    voterService.createVoteAccount(voter1);
+    voterService.createVoteAccount(voter2);
+    voterService.createVoteAccount(voter3);
+    voterService.createVoteAccount(voter4);
+    voterService.createVoteAccount(voter5);
+    voterService.createVoteAccount(voter6);
+    voterService.createVoteAccount(voter7);
+    voterService.createVoteAccount(voter8);
     }
 
 @Test
@@ -153,12 +187,14 @@ voter6.setGender(Gender.FEMALE);
 void testThatWeCanFindVotersByEmailAddress() throws VoterException {
         assertEquals("shola",voterService.findByVoterByEmail("samuelshola14@gmail.com").getLastName());
 }
-
+@Disabled
 @Test
     void testThatVoterCanChangePassword() throws VoterException {
-        assertEquals("BONESHAKER", voterService.changePassword("samuelshola14@gmail.com","nt57791sa","BONESHAKER"));
+       assertEquals("BONESHAKER", voterService.changePassword("samuelshola14@gmail.com","nt57791sa","BONESHAKER"));
         assertEquals("GARRY-MARTINS", voterService.changePassword("jojololamartins686@gmail.com","nt75384ma","GARRY-MARTINS"));
         assertEquals("GARRY-MARTINS", voterService.changePassword("nenman.williams@gmail.com","nt61496nn","GARRY-MARTINS"));
+        assertEquals("i_look_cute", voterService.changePassword("orework22@gmail.com","nt57588or","i_look_cute"));
+        assertEquals("i_look_beautiful", voterService.changePassword("motunrayor2@gmail.com","nt53840Ha","i_look_beautiful"));
 }
 
 

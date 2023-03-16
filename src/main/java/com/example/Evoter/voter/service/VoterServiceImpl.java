@@ -2,6 +2,7 @@ package com.example.Evoter.voter.service;
 
 //import com.example.Evoter.cloud.CloudInterface;
 import com.example.Evoter.emailSender.emailService.EmailServiceImpl;
+import com.example.Evoter.voter.data.model.Gender;
 import com.example.Evoter.voter.data.model.Voter;
 import com.example.Evoter.voter.data.repository.VoterRepository;
 import com.example.Evoter.voter.dto.request.VoterRequest;
@@ -114,7 +115,14 @@ String changePasswordMessage = "GOOD DAY MR  "+voter.getFirstName()+" "+voter.ge
 "this is to inform your that you E-VOTI" +
 "NG app account that was built by SAMUEL-SHOLA " +
 "password has been changed from "+voter.getPassword()+" to "+newPassword;
-emailService.sendEmail(voter,changePasswordHeader,changePasswordMessage);
+    String changePasswordMessageFemale = "GOOD DAY MISS/MRS  "+voter.getFirstName()+" "+voter.getLastName()+" \n" +
+            "hope you're having a nice day.\n" +
+            "this is to inform your that you E-VOTI" +
+            "NG app account that was built by SAMUEL-SHOLA " +
+            "password has been changed from "+voter.getPassword()+" to "+newPassword;
+if (voter.getGender() == Gender.FEMALE) emailService.sendEmail(voter,changePasswordHeader,changePasswordMessageFemale);
+if (voter.getGender() == Gender.MALE) emailService.sendEmail(voter,changePasswordHeader,changePasswordMessage);
+
 }
 
 
