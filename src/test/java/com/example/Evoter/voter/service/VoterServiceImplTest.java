@@ -1,9 +1,9 @@
 package com.example.Evoter.voter.service;
 
 import com.example.Evoter.address.data.model.Address;
+import com.example.Evoter.dto.request.PasswordRequest;
 import com.example.Evoter.voter.data.model.Gender;
-import com.example.Evoter.voter.data.model.Voter;
-import com.example.Evoter.voter.dto.request.VoterRequest;
+import com.example.Evoter.dto.request.VoterRequest;
 
 import com.example.Evoter.voter.exception.VoterException;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,16 +11,22 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockMultipartFile;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 @SpringBootTest
 class VoterServiceImplTest {
+    PasswordRequest passwordRequest1;
+    PasswordRequest passwordRequest2;
+    PasswordRequest passwordRequest3;
+    PasswordRequest passwordRequest4;
+    PasswordRequest passwordRequest5;
+    PasswordRequest passwordRequest6;
+    PasswordRequest passwordRequest7;
 VoterRequest voter1;
 Address address1;
 VoterRequest voter2;
@@ -34,13 +40,51 @@ Address address5;
 VoterRequest voter6;
 VoterRequest voter7;
 VoterRequest voter8;
+VoterRequest voter9;
 Address address6;
 Address address7;
 Address address8;
+Address address9;
 @Autowired
 VoterService voterService;
     @BeforeEach
     void setUp() {
+
+
+        passwordRequest1 = new PasswordRequest();
+        passwordRequest1.setNewPassword("BONESHAKER");
+        passwordRequest1.setVoteNumber("nt57791sa");
+        passwordRequest1.setUserEmailAddress("samuelshola14@gmail.com");
+
+        passwordRequest2 = new PasswordRequest();
+        passwordRequest2.setNewPassword("GARRY-MARTINS");
+        passwordRequest2.setUserEmailAddress("jojololamartins686@gmail.com");
+        passwordRequest2.setPhoneNumber("nt75384ma");
+
+        passwordRequest3 = new PasswordRequest();
+        passwordRequest3.setNewPassword("GARRY-MARTINS");
+        passwordRequest3.setVoteNumber("nt61496nn");
+        passwordRequest3.setUserEmailAddress("nenman.williams@gmail.com");
+
+        passwordRequest4 = new PasswordRequest();
+        passwordRequest4.setNewPassword("orework22@gmail.com");
+        passwordRequest4.setVoteNumber("nt57588or");
+        passwordRequest4.setNewPassword("i_look_cute");
+
+        passwordRequest5 = new PasswordRequest();
+        passwordRequest5.setNewPassword("i_look_beautiful");
+        passwordRequest5.setUserEmailAddress("motunrayor2@gmail.com");
+        passwordRequest5.setVoteNumber("nt53840Ha");
+
+        passwordRequest6 = new PasswordRequest();
+        passwordRequest6.setNewPassword("HTML&CSS");
+        passwordRequest6.setVoteNumber("nt90351jo");
+        passwordRequest6.setUserEmailAddress("dejimartins99@gmail.com");
+
+        passwordRequest7 = new PasswordRequest();
+        passwordRequest7.setNewPassword("i'm_A-model");
+        passwordRequest7.setVoteNumber("nt87031gl");
+        passwordRequest7.setUserEmailAddress("kachikachina@gmail.com");
     address1 = new Address();
     address1.setHouseNumber("103");
     address1.setStreetName("ilaje-road");
@@ -162,6 +206,21 @@ voter8.setOccupation("full stack engineer");
 voter8.setVoterAddress(address8);
 voter8.setGender(Gender.FEMALE);
 
+ address9 = new Address();
+        address9.setHouseNumber("25");
+        address9.setStreetName("iwaya");
+        address9.setLocalGovernment("onike");
+        address9.setState("lagos");
+voter9 = new VoterRequest();
+voter9.setFirstName("jonathan");
+voter9.setLastName("kent");
+voter9.setPassword("KING-OF-DSA");
+voter9.setPhoneNumber("08144316");
+voter9.setUserEmailAddress("dejimartins99@gmail.com");
+voter9.setOccupation("full stack engineer");
+voter9.setVoterAddress(address9);
+voter9.setGender(Gender.MALE);
+
 
     }
     @Disabled
@@ -177,6 +236,7 @@ voter8.setGender(Gender.FEMALE);
     voterService.createVoteAccount(voter6);
     voterService.createVoteAccount(voter7);
     voterService.createVoteAccount(voter8);
+    voterService.createVoteAccount(voter9);
     }
 
 @Test
@@ -190,13 +250,20 @@ void testThatWeCanFindVotersByEmailAddress() throws VoterException {
 @Disabled
 @Test
     void testThatVoterCanChangePassword() throws VoterException {
-       assertEquals("BONESHAKER", voterService.changePassword("samuelshola14@gmail.com","nt57791sa","BONESHAKER"));
-        assertEquals("GARRY-MARTINS", voterService.changePassword("jojololamartins686@gmail.com","nt75384ma","GARRY-MARTINS"));
-        assertEquals("GARRY-MARTINS", voterService.changePassword("nenman.williams@gmail.com","nt61496nn","GARRY-MARTINS"));
-        assertEquals("i_look_cute", voterService.changePassword("orework22@gmail.com","nt57588or","i_look_cute"));
-        assertEquals("i_look_beautiful", voterService.changePassword("motunrayor2@gmail.com","nt53840Ha","i_look_beautiful"));
-}
 
+    assertEquals("BONESHAKER", voterService.changePassword(passwordRequest1));
+    assertEquals("GARRY-MARTINS", voterService.changePassword(passwordRequest2));
+    assertEquals("GARRY-MARTINS", voterService.changePassword(passwordRequest3));
+    assertEquals("i_look_cute", voterService.changePassword(passwordRequest4));
+    assertEquals("i_look_beautiful", voterService.changePassword(passwordRequest5));
+    assertEquals("HTML&CSS", voterService.changePassword(passwordRequest6));
+    assertEquals("i'm_A-model", voterService.changePassword(passwordRequest7));
+}
+@Test
+    void testThatVotersCanForgetPassword() throws VoterException {
+
+        assertEquals("sa34526how", voterService.forgotPassword(passwordRequest2));
+}
 
 
 }

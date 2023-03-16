@@ -1,4 +1,4 @@
-package com.example.Evoter.voter.dto.request;
+package com.example.Evoter.dto.request;
 
 import com.example.Evoter.address.data.model.Address;
 import com.example.Evoter.voter.data.model.Gender;
