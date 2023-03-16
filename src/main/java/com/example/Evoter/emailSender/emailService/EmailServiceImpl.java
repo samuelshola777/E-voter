@@ -11,13 +11,13 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender mailSender;
     @Override
-    public Voter sendEmail(Voter voter, String subject, String message) {
+    public Voter sendEmail(Voter voter, String message,String subject) {
 
     SimpleMailMessage mailMessage = new SimpleMailMessage();
     mailMessage.setFrom("samuelShola14@gmail.com");
     mailMessage.setTo(voter.getUserEmailAddress());
-    mailMessage.setSubject(subject);
-    mailMessage.setText(message);
+    mailMessage.setSubject(message);
+    mailMessage.setText(subject);
     mailSender.send(mailMessage);
     return voter;
     }
