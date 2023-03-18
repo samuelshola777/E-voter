@@ -18,7 +18,7 @@ public class Party {
     private long id;
     private String partyName;
     private String partyChairMan;
-    @OneToOne
+    @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address headOfficeAddress;
     private String candidateName;
