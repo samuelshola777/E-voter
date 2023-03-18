@@ -28,7 +28,7 @@ public class PartyServiceImpl implements PartyService{
 
     @Override
     public Party findPartyById(long id) throws PartyException {
-      Party party = findPartyById(id);
+      Party party = partyRepository.findPartyById(id);
       if (party == null) throw new PartyException("Could not find party with id " + id);
           return party;
     }
@@ -49,4 +49,7 @@ public class PartyServiceImpl implements PartyService{
     public Party findPartyByEmailAddress(String emailAddress){
         return partyRepository.findPartyByPartyEmailAddress(emailAddress);
     }
+//    public Party findPartyByPartyName(String partyName){
+//
+//    }
 }

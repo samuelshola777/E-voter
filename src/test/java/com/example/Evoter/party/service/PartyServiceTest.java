@@ -2,6 +2,7 @@ package com.example.Evoter.party.service;
 
 import com.example.Evoter.address.data.model.Address;
 import com.example.Evoter.dto.request.PartyRequest;
+import com.example.Evoter.voter.exception.PartyException;
 import com.example.Evoter.voter.exception.PartyRegistrationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -71,7 +72,11 @@ assertEquals("party registration completed successfully", partyService.registerP
 assertEquals("party registration completed successfully", partyService.registerParty(partyRequest3));
     }
     @Test
-    void testThatWeCanFindPartyById(){
-     assertEquals("LABOR-PARTY", partyService.findPartyById(2));
+    void testThatWeCanFindPartyById() throws PartyException {
+     assertEquals("DPD", partyService.findPartyById(2).getPartyName());
+    }
+    @Test
+    void testThatWCanDeletePartyById() throws PartyException {
+
     }
 }

@@ -7,4 +7,6 @@ public interface PartyRepository extends JpaRepository<Party,Long> {
     Party findPartyByPartyName(String partyName);
 
     Party findPartyByPartyEmailAddress(String emailAddress);
+
+    Party findPartyById(long id);
 }
