@@ -9,9 +9,11 @@ import com.example.Evoter.voter.data.repository.VoterRepository;
 import com.example.Evoter.dto.request.VoterRequest;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
+import com.example.Evoter.workTools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.tools.Tool;
 import java.security.SecureRandom;
 
 @Service
@@ -22,15 +24,17 @@ public class VoterServiceImpl implements VoterService{
 EmailServiceImpl emailService;
 @Autowired
 VoterRepository veeRepo;
+Tools tool = new Tools();
 
 @Override
 public Voter createVoteAccount(VoterRequest voterRequest) throws VoterException {
 Voter builtVoter = buildVoter(voterRequest);
-Voter tokenedVoter = generateVoterToken(builtVoter);
+Voter tokenedVoter = tool.generateVoterToken(builtVoter);
 if (!findByEmail(tokenedVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
 Voter voterEmail = sendRegistrationMail(tokenedVoter);
 veeRepo.save(voterEmail);
 return voterEmail;
+
 }
 
 @Override
@@ -65,21 +69,14 @@ public String forgotPassword(PasswordRequest passwordRequest) throws PasswordExe
 Voter forgetPassWordVoter = findByVoterByEmail(passwordRequest.getUserEmailAddress());
 if (!forgetPassWordVoter.getVoteNumber().equals(passwordRequest.getVoteNumber()))
 throw new PasswordExeption("you have entered a wrong vote number trying to retrieve password");
-String newPassword = passwordGenerator(forgetPassWordVoter);
+String newPassword = tool.passwordGenerator(forgetPassWordVoter);
 forgetPassWordVoter.setPassword(newPassword);
 forgetPasswordMailSender(newPassword,forgetPassWordVoter);
 return "GOOD DAY "+forgetPassWordVoter.getFirstName()+" \n" +
 "the system have generated a new password and sent it the email address " +
 ""+forgetPassWordVoter.getUserEmailAddress();
     }
-public Voter generateVoterToken(Voter voter){
-String Fl = pickFirstTwoAlphabet(voter.getFirstName());
-String LL = pickLastTwoAlphabet(voter.getVoterAddress().getLocalGovernment());
-String number = numberGenerator();
-String token = LL+number+Fl;
-voter.setVoteNumber(token);
-return voter;
-}
+
 public Voter buildVoter(VoterRequest voterRequest) throws VoterException {
 return Voter.builder()
 .firstName(voterRequest.getFirstName()).
@@ -91,20 +88,6 @@ lastName(voterRequest.getLastName())
 .occupation(voterRequest.getOccupation())
 .gender(voterRequest.getGender()).build();
 
-}
-public String pickFirstTwoAlphabet(String word){
-String Li = word.substring( 0,2);
-return Li;
-}
-public String numberGenerator() {
-SecureRandom secureRandom = new SecureRandom();
-int number = secureRandom.nextInt(50000,99000);
-return String.valueOf(number);
-}
-public String pickLastTwoAlphabet(String word){
-String Li = word.substring(word.length() - 2);
-
-return Li;
 }
 
 public boolean findByEmail(String email){
@@ -146,13 +129,7 @@ public void forgetPasswordMailSender(String newPassword, Voter voter){
 "new password please ensure to change your password to what you can remember ";
     emailService.sendEmail(voter,header,body);
 }
-public String passwordGenerator(Voter voter){
-    SecureRandom secureRandom = new SecureRandom();
-    int num = secureRandom.nextInt(700000,9000000);
-    String fFirst = pickFirstTwoAlphabet(voter.getLastName());
-    String lLastTwo = pickLastTwoAlphabet(voter.getFirstName());
-    return lLastTwo+num+fFirst;
-}
+
 
 
 

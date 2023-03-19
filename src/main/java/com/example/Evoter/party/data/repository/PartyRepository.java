@@ -9,4 +9,6 @@ public interface PartyRepository extends JpaRepository<Party,Long> {
     Party findPartyByPartyEmailAddress(String emailAddress);
 
     Party findPartyById(long id);
+    void deleteById(long i);
+
 }

@@ -32,6 +32,19 @@ public class PartyServiceImpl implements PartyService{
       if (party == null) throw new PartyException("Could not find party with id " + id);
           return party;
     }
+
+    @Override
+    public String deletePartyById(long i) {
+        partyRepository.deleteById(i);
+         return "party deleted successfully";
+
+    }
+
+    @Override
+    public long countRegisteredParty() {
+        return partyRepository.count();
+    }
+
     public Party partyMapper(PartyRequest partyRequest){
         Party party = Party.builder().
                 partyName(partyRequest.getPartyName())

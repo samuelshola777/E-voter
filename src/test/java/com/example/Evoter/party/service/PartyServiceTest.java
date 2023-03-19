@@ -2,6 +2,7 @@ package com.example.Evoter.party.service;
 
 import com.example.Evoter.address.data.model.Address;
 import com.example.Evoter.dto.request.PartyRequest;
+import com.example.Evoter.party.data.model.Party;
 import com.example.Evoter.voter.exception.PartyException;
 import com.example.Evoter.voter.exception.PartyRegistrationException;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,6 +78,8 @@ assertEquals("party registration completed successfully", partyService.registerP
     }
     @Test
     void testThatWCanDeletePartyById() throws PartyException {
+        partyService.deletePartyById(2);
+        assertEquals(2,partyService.countRegisteredParty());
 
     }
 }
