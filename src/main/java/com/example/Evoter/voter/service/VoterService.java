@@ -18,4 +18,8 @@ public interface VoterService {
     String changePassword(PasswordRequest passwordRequest) throws VoterException;
 
     String forgotPassword(PasswordRequest passwordRequest) throws VoterException, PasswordExeption;
+
+    String deleteVoterById(long id);
+
+    long countNumberOfVoters();
 }

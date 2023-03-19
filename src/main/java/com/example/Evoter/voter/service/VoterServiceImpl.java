@@ -21,7 +21,7 @@ public class VoterServiceImpl implements VoterService{
 @Autowired
 EmailServiceImpl emailService;
 @Autowired
-VoterRepository veeRepo;
+VoterRepository voterRepository;
 ToolService tool = new ToolService();
 
 @Override
@@ -32,21 +32,21 @@ Voter tokenVoter = tool.generateVoterToken(builtVoter);
 verifyIfPhoneNumberContainsAlphabet(builtVoter.getPhoneNumber());
 if (!findByEmail(tokenVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
 Voter voterEmail = sendRegistrationMail(tokenVoter);
-veeRepo.save(voterEmail);
+voterRepository.save(voterEmail);
 return voterEmail;
 
 }
 
 @Override
 public Voter findByVoterById(long i) throws VoterException {
-return veeRepo.findById(i).
+return voterRepository.findById(i).
 orElseThrow(()-> new VoterException
 ("Voter with the ID "+i+" does not exist"));
 }
 
 @Override
 public Voter findByVoterByEmail(String emailAddress) throws VoterException {
-Voter voter = veeRepo.findByUserEmailAddress(emailAddress);
+Voter voter = voterRepository.findByUserEmailAddress(emailAddress);
 if (voter == null) throw new VoterException("no Existing Account with such email address");
 return voter;
 }
@@ -60,7 +60,7 @@ if (!foundVoter.getVoteNumber().equals(passwordRequest.getVoteNumber()))
 throw new VoterException("the vote number "+passwordRequest.getVoteNumber()+" is not recognised");
 changePasswordMailSender(foundVoter, passwordRequest.getNewPassword());
 foundVoter.setPassword(passwordRequest.getNewPassword());
-veeRepo.save(foundVoter);
+voterRepository.save(foundVoter);
 return passwordRequest.getNewPassword();
 }
 
@@ -77,7 +77,18 @@ return "GOOD DAY "+forgetPassWordVoter.getFirstName()+" \n" +
 ""+forgetPassWordVoter.getUserEmailAddress();
     }
 
-public Voter buildVoter(VoterRequest voterRequest) {
+    @Override
+    public String deleteVoterById(long id) {
+        voterRepository.deleteById(id);
+        return "voter with the ID ()->  " + id + "  is successfully deleted";
+    }
+
+    @Override
+    public long countNumberOfVoters() {
+        return voterRepository.count();
+    }
+
+    public Voter buildVoter(VoterRequest voterRequest) {
 return Voter.builder()
 .firstName(voterRequest.getFirstName()).
 lastName(voterRequest.getLastName())
@@ -91,7 +102,7 @@ lastName(voterRequest.getLastName())
 }
 
 public boolean findByEmail(String email){
-if (veeRepo.findByUserEmailAddress(email) == null)return true;
+if (voterRepository.findByUserEmailAddress(email) == null)return true;
 return false;
 }
 public Voter sendRegistrationMail(Voter voter){

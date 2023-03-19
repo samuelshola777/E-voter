@@ -5,6 +5,7 @@ import com.example.Evoter.dto.request.PasswordRequest;
 import com.example.Evoter.voter.data.model.Gender;
 import com.example.Evoter.dto.request.VoterRequest;
 
+import com.example.Evoter.voter.exception.PartyRegistrationException;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
 import org.junit.jupiter.api.BeforeEach;
@@ -201,7 +202,7 @@ voter8 = new VoterRequest();
 voter8.setFirstName("Haneefah");
 voter8.setLastName("beauti");
 voter8.setPassword("samuel-shola");
-voter8.setPhoneNumber("0814 456 5016");
+voter8.setPhoneNumber("08144565016");
 voter8.setUserEmailAddress("motunrayor2@gmail.com");
 voter8.setOccupation("full stack engineer");
 voter8.setVoterAddress(address8);
@@ -226,18 +227,18 @@ voter9.setGender(Gender.MALE);
     }
     @Disabled
     @Test
-    void testThatVoterCanRegisterForVotersCard() throws VoterException, IOException {
+    void testThatVoterCanRegisterForVotersCard() throws VoterException, IOException, PartyRegistrationException {
 
 
-    voterService.createVoteAccount(voter1);
-    voterService.createVoteAccount(voter2);
-    voterService.createVoteAccount(voter3);
-    voterService.createVoteAccount(voter4);
-    voterService.createVoteAccount(voter5);
-    voterService.createVoteAccount(voter6);
-    voterService.createVoteAccount(voter7);
+//    voterService.createVoteAccount(voter1);
+//    voterService.createVoteAccount(voter2);
+//    voterService.createVoteAccount(voter3);
+//    voterService.createVoteAccount(voter4);
+//    voterService.createVoteAccount(voter5);
+//    voterService.createVoteAccount(voter6);
+//    voterService.createVoteAccount(voter7);
     voterService.createVoteAccount(voter8);
-    voterService.createVoteAccount(voter9);
+//    voterService.createVoteAccount(voter9);
     }
 
 @Test
@@ -266,5 +267,10 @@ void testThatWeCanFindVotersByEmailAddress() throws VoterException {
     assertEquals("BONESHAKER", voterService.changePassword(passwordRequest1));
 }
 
+    @Test
 
+    void testThatWeCanDeleteVoter(){
+        voterService.deleteVoterById(8);
+        assertEquals(8,voterService.countNumberOfVoters());
+    }
 }
