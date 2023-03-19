@@ -1,11 +1,12 @@
 package com.example.Evoter.party.service;
 
 import com.example.Evoter.dto.request.PartyRequest;
-import com.example.Evoter.dto.response.PartyResponse;
 import com.example.Evoter.party.data.model.Party;
 import com.example.Evoter.party.data.repository.PartyRepository;
 import com.example.Evoter.voter.exception.PartyException;
 import com.example.Evoter.voter.exception.PartyRegistrationException;
+import com.example.Evoter.voter.exception.VoterException;
+import com.example.Evoter.workToolsservice.ToolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +14,13 @@ import org.springframework.stereotype.Service;
 public class PartyServiceImpl implements PartyService{
     @Autowired
     PartyRepository partyRepository;
+    ToolService tool = new ToolService();
     @Override
-    public String registerParty(PartyRequest partyRequest1) throws PartyRegistrationException {
+    public String registerParty(PartyRequest partyRequest1) throws PartyRegistrationException, VoterException {
         Party party = partyMapper(partyRequest1);
-        if (findPartyByName(party.getPartyName() ) != null)
-        throw new PartyRegistrationException("Party name ()-> " +
-        party.getPartyName() +" already exist");
-        if (findPartyByEmailAddress(party.getPartyEmailAddress() ) != null)
-        throw new PartyRegistrationException("Party email ()-> " +
-            party.getPartyEmailAddress() +" already exist");
+        verifyIfPhoneNumberContainAlphabet(party.getPartyPhoneNumber());
+        checkIfAccountAlreadyExists(party);
+        verifyPhoneNumberLength(party.getPartyPhoneNumber());
         partyRepository.save(party);
         return "party registration completed successfully";
     }
@@ -62,7 +61,16 @@ public class PartyServiceImpl implements PartyService{
     public Party findPartyByEmailAddress(String emailAddress){
         return partyRepository.findPartyByPartyEmailAddress(emailAddress);
     }
-//    public Party findPartyByPartyName(String partyName){
-//
-//    }
+public void verifyIfPhoneNumberContainAlphabet(String phoneNumber) throws VoterException {
+    if (tool.phoneNumberVerifier(phoneNumber)) throw new VoterException("you have entered an invalid phone number");
+}
+public void checkIfAccountAlreadyExists(Party party) throws PartyRegistrationException {
+if ( findPartyByName(party.getPartyName())
+!= null && findPartyByEmailAddress(party.getPartyEmailAddress()) != null )
+throw new PartyRegistrationException("party account already exist");
+}
+public void verifyPhoneNumberLength(String phoneNumber) throws PartyRegistrationException {
+        if (!tool.verifyPhoneNumberLength(phoneNumber))
+        throw new PartyRegistrationException("you have entered an invalid length phone number");
+}
 }

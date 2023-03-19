@@ -5,11 +5,12 @@ import com.example.Evoter.dto.response.PartyResponse;
 import com.example.Evoter.party.data.model.Party;
 import com.example.Evoter.voter.exception.PartyException;
 import com.example.Evoter.voter.exception.PartyRegistrationException;
+import com.example.Evoter.voter.exception.VoterException;
 
 public interface PartyService {
 
 
-    String registerParty(PartyRequest partyRequest1) throws PartyRegistrationException;
+    String registerParty(PartyRequest partyRequest1) throws PartyRegistrationException, VoterException;
 
     Party findPartyById(long id) throws PartyException;
 

@@ -5,6 +5,7 @@ import com.example.Evoter.dto.request.PartyRequest;
 import com.example.Evoter.party.data.model.Party;
 import com.example.Evoter.voter.exception.PartyException;
 import com.example.Evoter.voter.exception.PartyRegistrationException;
+import com.example.Evoter.voter.exception.VoterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -66,7 +67,7 @@ address3.setLocalGovernment("OYINGB0");
     }
 @Disabled
     @Test
-    void testThatWeCanRegisterParty() throws PartyRegistrationException {
+    void testThatWeCanRegisterParty() throws PartyRegistrationException, VoterException {
 
 assertEquals("party registration completed successfully", partyService.registerParty(partyRequest1));
 assertEquals("party registration completed successfully", partyService.registerParty(partyRequest2));

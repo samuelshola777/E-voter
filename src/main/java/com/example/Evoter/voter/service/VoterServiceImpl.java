@@ -7,9 +7,10 @@ import com.example.Evoter.voter.data.model.Gender;
 import com.example.Evoter.voter.data.model.Voter;
 import com.example.Evoter.voter.data.repository.VoterRepository;
 import com.example.Evoter.dto.request.VoterRequest;
+import com.example.Evoter.voter.exception.PartyRegistrationException;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
-import com.example.Evoter.workToolsservice.Tools;
+import com.example.Evoter.workToolsservice.ToolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +22,16 @@ public class VoterServiceImpl implements VoterService{
 EmailServiceImpl emailService;
 @Autowired
 VoterRepository veeRepo;
-Tools tool = new Tools();
+ToolService tool = new ToolService();
 
 @Override
-public Voter createVoteAccount(VoterRequest voterRequest) throws VoterException {
+public Voter createVoteAccount(VoterRequest voterRequest) throws VoterException, PartyRegistrationException {
 Voter builtVoter = buildVoter(voterRequest);
-Voter tokenedVoter = tool.generateVoterToken(builtVoter);
-if (!findByEmail(tokenedVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
-Voter voterEmail = sendRegistrationMail(tokenedVoter);
+verifyPhoneNumberLength(builtVoter.getPhoneNumber());
+Voter tokenVoter = tool.generateVoterToken(builtVoter);
+verifyIfPhoneNumberContainsAlphabet(builtVoter.getPhoneNumber());
+if (!findByEmail(tokenVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
+Voter voterEmail = sendRegistrationMail(tokenVoter);
 veeRepo.save(voterEmail);
 return voterEmail;
 
@@ -74,7 +77,7 @@ return "GOOD DAY "+forgetPassWordVoter.getFirstName()+" \n" +
 ""+forgetPassWordVoter.getUserEmailAddress();
     }
 
-public Voter buildVoter(VoterRequest voterRequest) throws VoterException {
+public Voter buildVoter(VoterRequest voterRequest) {
 return Voter.builder()
 .firstName(voterRequest.getFirstName()).
 lastName(voterRequest.getLastName())
@@ -126,8 +129,14 @@ public void forgetPasswordMailSender(String newPassword, Voter voter){
 "new password please ensure to change your password to what you can remember ";
     emailService.sendEmail(voter,header,body);
 }
+    public void verifyPhoneNumberLength(String phoneNumber) throws PartyRegistrationException, VoterException {
+        if (!tool.verifyPhoneNumberLength(phoneNumber))
+            throw new VoterException("you have entered an invalid length phone number");
+    }
 
-
-
+public void verifyIfPhoneNumberContainsAlphabet(String phoneNumber) throws VoterException {
+    if (tool.phoneNumberVerifier(phoneNumber))
+        throw new VoterException("you have entered an invalid phone number");
+}
 
 }
