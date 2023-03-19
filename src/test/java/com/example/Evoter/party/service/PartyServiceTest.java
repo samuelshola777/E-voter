@@ -45,10 +45,10 @@ address2.setState("lagos");
 address2.setStreetName("alausa");
 address2.setLocalGovernment("ikeja");
         partyRequest2 = new PartyRequest();
-        partyRequest2.setPartyName("DPD");
+        partyRequest2.setPartyName("PDP");
         partyRequest2.setPartyChairMan("ATIKU");
-        partyRequest2.setPartyEmailAddress("DPD@gmail.com");
-        partyRequest2.setPartyPhoneNumber("080499903442");
+        partyRequest2.setPartyEmailAddress("PDP@gmail.com");
+        partyRequest2.setPartyPhoneNumber("08049990344");
         partyRequest2.setCandidateName("ATIKU");
         partyRequest2.setHeadOfficeAddress(address2);
 
@@ -75,7 +75,7 @@ assertEquals("party registration completed successfully", partyService.registerP
     }
     @Test
     void testThatWeCanFindPartyById() throws PartyException {
-     assertEquals("DPD", partyService.findPartyById(2).getPartyName());
+     assertEquals("PDP", partyService.findPartyById(2).getPartyName());
     }
     @Test
     void testThatWCanDeletePartyById() throws PartyException {
@@ -83,4 +83,10 @@ assertEquals("party registration completed successfully", partyService.registerP
         assertEquals(2,partyService.countRegisteredParty());
 
     }
+    @Test
+    void testThatWeCanFindPartyByName(){
+        assertEquals("PDP",partyService.findPartyByName(partyRequest2.getPartyName()).getPartyName());
+    }
+
+
 }

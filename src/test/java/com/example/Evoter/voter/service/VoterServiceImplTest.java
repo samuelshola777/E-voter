@@ -230,15 +230,15 @@ voter9.setGender(Gender.MALE);
     void testThatVoterCanRegisterForVotersCard() throws VoterException, IOException, PartyRegistrationException {
 
 
-//    voterService.createVoteAccount(voter1);
-//    voterService.createVoteAccount(voter2);
-//    voterService.createVoteAccount(voter3);
-//    voterService.createVoteAccount(voter4);
-//    voterService.createVoteAccount(voter5);
-//    voterService.createVoteAccount(voter6);
-//    voterService.createVoteAccount(voter7);
+    voterService.createVoteAccount(voter1);
+    voterService.createVoteAccount(voter2);
+    voterService.createVoteAccount(voter3);
+    voterService.createVoteAccount(voter4);
+    voterService.createVoteAccount(voter5);
+    voterService.createVoteAccount(voter6);
+    voterService.createVoteAccount(voter7);
     voterService.createVoteAccount(voter8);
-//    voterService.createVoteAccount(voter9);
+    voterService.createVoteAccount(voter9);
     }
 
 @Test

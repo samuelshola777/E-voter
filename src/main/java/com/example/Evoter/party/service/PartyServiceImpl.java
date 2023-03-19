@@ -73,4 +73,11 @@ public void verifyPhoneNumberLength(String phoneNumber) throws PartyRegistration
         if (!tool.verifyPhoneNumberLength(phoneNumber))
         throw new PartyRegistrationException("you have entered an invalid length phone number");
 }
+
+public Party findByPartyName(String partyName) throws PartyException {
+Party party = partyRepository.findPartyByPartyName(partyName);
+if (party == null) throw new PartyException
+("no registered party with the party name  "+partyName+" found");
+return party;
+    }
 }

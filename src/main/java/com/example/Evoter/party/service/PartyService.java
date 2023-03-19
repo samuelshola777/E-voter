@@ -17,4 +17,7 @@ public interface PartyService {
     String deletePartyById(long i);
 
     long countRegisteredParty();
+
+    Party findPartyByName(String partyName);
+    Party findByPartyName(String partyName) throws PartyException;
 }
