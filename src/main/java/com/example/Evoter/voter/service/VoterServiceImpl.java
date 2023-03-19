@@ -9,12 +9,9 @@ import com.example.Evoter.voter.data.repository.VoterRepository;
 import com.example.Evoter.dto.request.VoterRequest;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
-import com.example.Evoter.workTools.Tools;
+import com.example.Evoter.workToolsservice.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.tools.Tool;
-import java.security.SecureRandom;
 
 @Service
 public class VoterServiceImpl implements VoterService{
