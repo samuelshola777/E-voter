@@ -43,10 +43,12 @@ VoterRequest voter6;
 VoterRequest voter7;
 VoterRequest voter8;
 VoterRequest voter9;
+VoterRequest voter10;
 Address address6;
 Address address7;
 Address address8;
 Address address9;
+Address address10;
 @Autowired
 VoterService voterService;
     @BeforeEach
@@ -223,6 +225,21 @@ voter9.setOccupation("full stack engineer");
 voter9.setVoterAddress(address9);
 voter9.setGender(Gender.MALE);
 
+ address10 = new Address();
+        address10.setHouseNumber("25");
+        address10.setStreetName("iwaya");
+        address10.setLocalGovernment("onike");
+        address10.setState("lagos");
+voter10 = new VoterRequest();
+voter10.setFirstName("Smile");
+voter10.setLastName("OkuTa");
+voter10.setPassword("hairBender");
+voter10.setPhoneNumber("08144316446");
+voter10.setUserEmailAddress("babysmilex4real@gmail.com");
+voter10.setOccupation("HairDesser");
+voter10.setVoterAddress(address10);
+voter10.setGender(Gender.FEMALE);
+
 
     }
     @Disabled
@@ -239,6 +256,7 @@ voter9.setGender(Gender.MALE);
     voterService.createVoteAccount(voter7);
     voterService.createVoteAccount(voter8);
     voterService.createVoteAccount(voter9);
+    voterService.createVoteAccount(voter10);
     }
 
 @Test

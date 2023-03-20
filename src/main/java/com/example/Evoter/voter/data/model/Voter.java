@@ -2,6 +2,7 @@ package com.example.Evoter.voter.data.model;
 
 import com.example.Evoter.address.data.model.Address;
 import com.example.Evoter.voter.exception.VoterException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -32,6 +33,7 @@ public class Voter {
     private String userEmailAddress;
     private LocalDateTime starAt;
     private LocalDateTime endAt;
+    @JsonIgnore
     @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address voterAddress;
