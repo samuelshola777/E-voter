@@ -2,6 +2,7 @@ package com.example.Evoter.voter.service;
 
 //import com.example.Evoter.cloud.CloudInterface;
 import com.example.Evoter.dto.request.PasswordRequest;
+import com.example.Evoter.dto.response.VoterResponse;
 import com.example.Evoter.emailSender.emailService.EmailServiceImpl;
 import com.example.Evoter.voter.data.model.Gender;
 import com.example.Evoter.voter.data.model.Voter;
@@ -25,7 +26,7 @@ VoterRepository voterRepository;
 ToolService tool = new ToolService();
 
 @Override
-public Voter createVoteAccount(VoterRequest voterRequest) throws VoterException, PartyRegistrationException {
+public VoterResponse createVoteAccount(VoterRequest voterRequest) throws VoterException, PartyRegistrationException {
 Voter builtVoter = buildVoter(voterRequest);
 verifyPhoneNumberLength(builtVoter.getPhoneNumber());
 Voter tokenVoter = tool.generateVoterToken(builtVoter);
@@ -33,7 +34,8 @@ verifyIfPhoneNumberContainsAlphabet(builtVoter.getPhoneNumber());
 if (!findByEmail(tokenVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
 Voter voterEmail = sendRegistrationMail(tokenVoter);
 voterRepository.save(voterEmail);
-return voterEmail;
+VoterResponse voterResponse = mapFromVoterToResponse(voterEmail);
+return voterResponse;
 
 }
 
@@ -149,5 +151,15 @@ public void verifyIfPhoneNumberContainsAlphabet(String phoneNumber) throws Voter
     if (tool.phoneNumberVerifier(phoneNumber))
         throw new VoterException("you have entered an invalid phone number");
 }
+
+    public VoterResponse mapFromVoterToResponse(Voter voter){
+     VoterResponse voterResponse = VoterResponse.
+             builder().firstName(voter.getFirstName())
+             .lastName(voter.getLastName()).
+             gender(voter.getGender()).
+             userEmailAddress(voter.getUserEmailAddress())
+             .build();
+     return voterResponse;
+    }
 
 }
