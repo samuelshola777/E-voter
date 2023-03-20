@@ -31,9 +31,8 @@ public class Voter {
     private String phoneNumber;
     private String voteNumber;
     private String userEmailAddress;
-    private LocalDateTime starAt;
-    private LocalDateTime endAt;
-    @JsonIgnore
+    private LocalDate starAt;
+    private LocalDate endAt;
     @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address voterAddress;
@@ -43,14 +42,6 @@ public class Voter {
     private Gender gender;
     private int registrationYear = LocalDateTime.now().getYear();
 
-    public void setPhoneNumber(String phoneNumber) throws VoterException {
-        for (int i = 0; i < phoneNumber.length(); i++) {
-            if (!Character.isDigit(phoneNumber.charAt(i)))
-                throw new VoterException("you have entered an invalid phone number");
-        }
-        if (phoneNumber.length() != 11) throw new VoterException("you have entered an invalid length of phone number");
-        this.phoneNumber = phoneNumber;
-    }
 }
 
 

@@ -34,8 +34,7 @@ verifyIfPhoneNumberContainsAlphabet(builtVoter.getPhoneNumber());
 if (!findByEmail(tokenVoter.getUserEmailAddress())) throw new VoterException("Account Already Exist ");
 Voter voterEmail = sendRegistrationMail(tokenVoter);
 voterRepository.save(voterEmail);
-VoterResponse voterResponse = mapFromVoterToResponse(voterEmail);
-return voterResponse;
+    return mapFromVoterToResponse(voterEmail);
 
 }
 
