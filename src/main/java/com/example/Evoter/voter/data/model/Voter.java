@@ -32,7 +32,7 @@ public class Voter {
     private String voteNumber;
     private String userEmailAddress;
     private LocalDate starAt;
-    private LocalDate endAt;
+    private LocalDate dateOfBirth;
     @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address voterAddress;
