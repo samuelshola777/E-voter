@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -141,11 +143,15 @@ if (voter.getGender() == Gender.MALE) emailService.sendEmail(voter,changePasswor
 
 }
 public void forgetPasswordMailSender(String newPassword, Voter voter){
+    LocalTime changeTime = LocalTime.now();
+    LocalDate changeDate = LocalDate.now();
+
     String header ="<<E-VOTERS  FORGET PASSWORD NOTIFICATION>>";
     String body = "good day "+voter.getFirstName()+"" +
     " "+voter.getLastName()+" this is to inform you that" +
-" a new password has been create for your" +
-    " E-VOTER account ()-> "+newPassword+"  is your  " +
+" a new password has been create for you " +"\n password" +
+" Generated time  ====>>> "+changeTime+" \n password Generated date ====>>> "+changeDate+" \n"
+    +" E-VOTER account ()=====>>> "+newPassword+"  is your  " +
 "new password please ensure to change your password to what you can remember ";
     emailService.sendEmail(voter,header,body);
 }
