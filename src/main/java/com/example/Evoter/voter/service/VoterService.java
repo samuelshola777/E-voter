@@ -8,6 +8,8 @@ import com.example.Evoter.voter.exception.PartyRegistrationException;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
 
+import java.util.List;
+
 public interface VoterService {
     VoterResponse createVoteAccount(VoterRequest voter1) throws VoterException, PartyRegistrationException;
 
@@ -19,6 +21,7 @@ public interface VoterService {
     String changePassword(PasswordRequest passwordRequest) throws VoterException;
 
     String forgotPassword(PasswordRequest passwordRequest) throws VoterException, PasswordExeption;
+    List<VoterResponse> getAllVoters(int pageNumber, int pageSize);
 
     String deleteVoterById(long id);
 

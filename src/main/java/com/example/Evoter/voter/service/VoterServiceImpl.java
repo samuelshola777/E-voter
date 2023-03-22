@@ -13,7 +13,15 @@ import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
 import com.example.Evoter.workToolsservice.ToolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VoterServiceImpl implements VoterService{
@@ -159,6 +167,13 @@ public void verifyIfPhoneNumberContainsAlphabet(String phoneNumber) throws Voter
              userEmailAddress(voter.getUserEmailAddress())
              .build();
      return voterResponse;
+    }
+
+    public List<VoterResponse> getAllVoters(int pageNumber, int pageSize){
+    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Voter> voter = voterRepository.findAll(pageable);
+        List<Voter> voterList = voter.getContent();
+        return voterList.stream().map(boobs -> mapFromVoterToResponse(boobs)).collect(Collectors.toList());
     }
 
 }
