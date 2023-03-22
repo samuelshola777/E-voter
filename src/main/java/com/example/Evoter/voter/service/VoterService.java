@@ -7,6 +7,7 @@ import com.example.Evoter.dto.request.VoterRequest;
 import com.example.Evoter.voter.exception.PartyRegistrationException;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface VoterService {
     String changePassword(PasswordRequest passwordRequest) throws VoterException;
 
     String forgotPassword(PasswordRequest passwordRequest) throws VoterException, PasswordExeption;
-    List<VoterResponse> getAllVoters(int pageNumber, int pageSize);
+    Page<VoterResponse> getAllVoters(int pageNumber);
 
     String deleteVoterById(long id);
 

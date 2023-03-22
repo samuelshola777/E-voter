@@ -12,9 +12,12 @@ import com.example.Evoter.voter.exception.PartyRegistrationException;
 import com.example.Evoter.voter.exception.PasswordExeption;
 import com.example.Evoter.voter.exception.VoterException;
 import com.example.Evoter.workToolsservice.ToolService;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,15 +27,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@AllArgsConstructor
 @Service
 public class VoterServiceImpl implements VoterService{
 //@Autowired
 //CloudInterface cloudInterface;
-@Autowired
-EmailServiceImpl emailService;
-@Autowired
-VoterRepository voterRepository;
+
+
+private final EmailServiceImpl emailService;
+
+private final VoterRepository voterRepository;
 ToolService tool = new ToolService();
 
 @Override
@@ -175,11 +179,16 @@ public void verifyIfPhoneNumberContainsAlphabet(String phoneNumber) throws Voter
      return voterResponse;
     }
 
-    public List<VoterResponse> getAllVoters(int pageNumber, int pageSize){
-    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public Page<VoterResponse> getAllVoters(int pageNumber){
+        ModelMapper mapper = new ModelMapper();
+    Pageable pageable = PageRequest.of(pageNumber, 3);
         Page<Voter> voter = voterRepository.findAll(pageable);
         List<Voter> voterList = voter.getContent();
-        return voterList.stream().map(boobs -> mapFromVoterToResponse(boobs)).collect(Collectors.toList());
+
+        List<VoterResponse> response = voter.getContent().stream()
+                .map(voters -> mapper.map(voterList, VoterResponse.class))
+                .collect(Collectors.toList());
+        return new PageImpl(response, pageable, voter.getTotalElements());
     }
 
 }
