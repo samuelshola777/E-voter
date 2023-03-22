@@ -155,7 +155,7 @@ public void forgetPasswordMailSender(String newPassword, Voter voter){
 "new password please ensure to change your password to what you can remember ";
     emailService.sendEmail(voter,header,body);
 }
-    public void verifyPhoneNumberLength(String phoneNumber) throws PartyRegistrationException, VoterException {
+public void verifyPhoneNumberLength(String phoneNumber) throws PartyRegistrationException, VoterException {
         if (!tool.verifyPhoneNumberLength(phoneNumber))
             throw new VoterException("you have entered an invalid length phone number");
     }
